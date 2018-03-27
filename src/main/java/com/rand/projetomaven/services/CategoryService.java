@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.rand.projetomaven.domain.Category;
 import com.rand.projetomaven.repositories.CategoryRepository;
+import com.rand.projetomaven.services.exceptions.ObjNotFoundException;
 
 @Service
 public class CategoryService {
@@ -16,7 +17,8 @@ public class CategoryService {
 	
 	public Category search(Integer id) {
 		Optional<Category> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjNotFoundException(
+		  "Object not found! Id:" + id + ", Type: "+ Category.class.getName()));			
 	}
 
 }
