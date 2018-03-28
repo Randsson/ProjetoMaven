@@ -8,9 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.rand.projetomaven.domain.Category;
+import com.rand.projetomaven.domain.City;
 import com.rand.projetomaven.domain.Product;
+import com.rand.projetomaven.domain.State;
 import com.rand.projetomaven.repositories.CategoryRepository;
+import com.rand.projetomaven.repositories.CityRepository;
 import com.rand.projetomaven.repositories.ProductRepository;
+import com.rand.projetomaven.repositories.StateRepository;
 
 @SpringBootApplication
 public class ProjetomavenApplication implements CommandLineRunner {
@@ -19,7 +23,11 @@ public class ProjetomavenApplication implements CommandLineRunner {
 	private CategoryRepository catRepository;
 	@Autowired
 	private ProductRepository prodRepository;
-
+	@Autowired
+	private StateRepository stateRepository;
+	@Autowired
+	private CityRepository cityRepository;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetomavenApplication.class, args);
 	}
@@ -44,5 +52,19 @@ public class ProjetomavenApplication implements CommandLineRunner {
 		
 		catRepository.saveAll(Arrays.asList(cat1, cat2));
 		prodRepository.saveAll(Arrays.asList(p1, p2, p3));
+		
+		State est1 = new State(null, "Alagoas");
+		State est2 = new State(null, "Pernambuco");
+		
+		City city1 = new City(null, "Maceió", est1);
+		City city2 = new City(null, "Santo Amaro", est2);
+		City city3 = new City(null, "Recife", est2);
+		
+		est1.getCities().addAll(Arrays.asList(city1));
+		est2.getCities().addAll(Arrays.asList(city2, city3));
+		
+		stateRepository.saveAll(Arrays.asList(est1, est2));
+		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+		
 	}
 }
