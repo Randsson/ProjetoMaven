@@ -1,5 +1,6 @@
 package com.rand.projetomaven;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,12 +8,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.rand.projetomaven.domain.Address;
 import com.rand.projetomaven.domain.Category;
 import com.rand.projetomaven.domain.City;
+import com.rand.projetomaven.domain.Costumer;
 import com.rand.projetomaven.domain.Product;
 import com.rand.projetomaven.domain.State;
+import com.rand.projetomaven.domain.enums.CostumerKind;
+import com.rand.projetomaven.repositories.AddressRepository;
 import com.rand.projetomaven.repositories.CategoryRepository;
 import com.rand.projetomaven.repositories.CityRepository;
+import com.rand.projetomaven.repositories.CostumerRepository;
 import com.rand.projetomaven.repositories.ProductRepository;
 import com.rand.projetomaven.repositories.StateRepository;
 
@@ -27,6 +33,10 @@ public class ProjetomavenApplication implements CommandLineRunner {
 	private StateRepository stateRepository;
 	@Autowired
 	private CityRepository cityRepository;
+	@Autowired
+	private CostumerRepository costumerRepository;
+	@Autowired
+	private AddressRepository addressRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetomavenApplication.class, args);
@@ -66,5 +76,15 @@ public class ProjetomavenApplication implements CommandLineRunner {
 		stateRepository.saveAll(Arrays.asList(est1, est2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 		
+		Costumer costu1 = new Costumer(null, "randsson", "randsson@com", "99999999", CostumerKind.PESSOAFISICA);
+		costu1.getPhones().addAll(Arrays.asList("99999999", "88888889"));
+		
+		Address addre1 = new Address(null, "13", "complement", "ouro preto", "praça", "57045810", costu1, city1);
+		Address addre2 = new Address(null, "15", "nada", "sei não", "zona", "57045830", costu1, city2);
+		
+		costu1.getAddresses().addAll(Arrays.asList(addre1, addre2));
+		
+		costumerRepository.saveAll(Arrays.asList(costu1));
+		addressRepository.saveAll(Arrays.asList(addre1, addre2));
 	}
 }
