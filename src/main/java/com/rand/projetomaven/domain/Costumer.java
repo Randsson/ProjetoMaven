@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.rand.projetomaven.domain.enums.CostumerKind;
 
@@ -38,6 +39,7 @@ public class Costumer implements Serializable{
 	@CollectionTable(name="phone")
 	private Set<String> phones = new HashSet<>();
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="costumer")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
