@@ -12,10 +12,11 @@ import com.rand.projetomaven.domain.Address;
 import com.rand.projetomaven.domain.Category;
 import com.rand.projetomaven.domain.City;
 import com.rand.projetomaven.domain.Costumer;
-import com.rand.projetomaven.domain.Pedido;
+import com.rand.projetomaven.domain.ItemPedido;
 import com.rand.projetomaven.domain.Payment;
 import com.rand.projetomaven.domain.PaymentWithCCard;
 import com.rand.projetomaven.domain.PaymentWithTicket;
+import com.rand.projetomaven.domain.Pedido;
 import com.rand.projetomaven.domain.Product;
 import com.rand.projetomaven.domain.State;
 import com.rand.projetomaven.domain.enums.CostumerKind;
@@ -24,8 +25,9 @@ import com.rand.projetomaven.repositories.AddressRepository;
 import com.rand.projetomaven.repositories.CategoryRepository;
 import com.rand.projetomaven.repositories.CityRepository;
 import com.rand.projetomaven.repositories.CostumerRepository;
-import com.rand.projetomaven.repositories.PedidoRepository;
+import com.rand.projetomaven.repositories.ItemPedidoRepository;
 import com.rand.projetomaven.repositories.PaymentRepository;
+import com.rand.projetomaven.repositories.PedidoRepository;
 import com.rand.projetomaven.repositories.ProductRepository;
 import com.rand.projetomaven.repositories.StateRepository;
 
@@ -48,6 +50,9 @@ public class ProjetomavenApplication implements CommandLineRunner {
 	private PaymentRepository paymentRepository;
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository; 
+	
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetomavenApplication.class, args);
@@ -114,5 +119,18 @@ public class ProjetomavenApplication implements CommandLineRunner {
 		
 		pedidoRepository.saveAll(Arrays.asList(pedido, pedido2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+		
+		ItemPedido ip1 = new ItemPedido(pedido, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(pedido, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(pedido2, p2, 100.00, 1, 800.00);
+		
+		pedido.getItens().addAll(Arrays.asList(ip1, ip2));
+		pedido2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
