@@ -1,6 +1,6 @@
 package com.rand.projetomaven;
 
-import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +12,20 @@ import com.rand.projetomaven.domain.Address;
 import com.rand.projetomaven.domain.Category;
 import com.rand.projetomaven.domain.City;
 import com.rand.projetomaven.domain.Costumer;
+import com.rand.projetomaven.domain.Pedido;
+import com.rand.projetomaven.domain.Payment;
+import com.rand.projetomaven.domain.PaymentWithCCard;
+import com.rand.projetomaven.domain.PaymentWithTicket;
 import com.rand.projetomaven.domain.Product;
 import com.rand.projetomaven.domain.State;
 import com.rand.projetomaven.domain.enums.CostumerKind;
+import com.rand.projetomaven.domain.enums.PaymentStatus;
 import com.rand.projetomaven.repositories.AddressRepository;
 import com.rand.projetomaven.repositories.CategoryRepository;
 import com.rand.projetomaven.repositories.CityRepository;
 import com.rand.projetomaven.repositories.CostumerRepository;
+import com.rand.projetomaven.repositories.PedidoRepository;
+import com.rand.projetomaven.repositories.PaymentRepository;
 import com.rand.projetomaven.repositories.ProductRepository;
 import com.rand.projetomaven.repositories.StateRepository;
 
@@ -37,6 +44,10 @@ public class ProjetomavenApplication implements CommandLineRunner {
 	private CostumerRepository costumerRepository;
 	@Autowired
 	private AddressRepository addressRepository;
+	@Autowired
+	private PaymentRepository paymentRepository;
+	@Autowired
+	private PedidoRepository pedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetomavenApplication.class, args);
@@ -86,5 +97,22 @@ public class ProjetomavenApplication implements CommandLineRunner {
 		
 		costumerRepository.saveAll(Arrays.asList(costu1));
 		addressRepository.saveAll(Arrays.asList(addre1, addre2));
+		
+		
+		SimpleDateFormat sdf= new SimpleDateFormat("dd/MM/yyyy HH:mm"); //auxiliar para a data
+		
+		Pedido pedido = new Pedido(null, sdf.parse("30/09/2017 10:32"), costu1, addre1);
+		Pedido pedido2 = new Pedido(null, sdf.parse("10/10/2017 19:35"),costu1, addre2);
+
+		Payment pay1 = new PaymentWithCCard(null, PaymentStatus.QUITADO, pedido, 6);
+		pedido.setPayment(pay1);
+		
+		Payment pay2 = new PaymentWithTicket(null, PaymentStatus.PENDENTE, pedido2, sdf.parse("20/10/2017 00:00"), null);
+		pedido2.setPayment(pay2);
+		
+		costu1.getPedidos().addAll(Arrays.asList(pedido, pedido2));
+		
+		pedidoRepository.saveAll(Arrays.asList(pedido, pedido2));
+		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 	}
 }
