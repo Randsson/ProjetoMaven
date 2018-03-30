@@ -15,7 +15,7 @@ public class ProductService {
 	@Autowired
 	private ProductRepository repo;
 	
-	public Product search(Integer id) {
+	public Product find(Integer id) {
 		Optional<Product> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjNotFoundException(
 		  "Object not found! Id:" + id + ", Type: "+ Product.class.getName()));			

@@ -15,7 +15,7 @@ public class CostumerService {
 	@Autowired
 	private CostumerRepository repo;
 	
-	public Costumer search(Integer id) {
+	public Costumer find(Integer id) {
 		Optional<Costumer> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjNotFoundException(
 		  "Object not found! Id:" + id + ", Type: "+ Costumer.class.getName()));			

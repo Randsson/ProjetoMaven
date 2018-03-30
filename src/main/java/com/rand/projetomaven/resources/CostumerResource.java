@@ -19,8 +19,8 @@ public class CostumerResource {
 	
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Costumer obj = service.search(id);
+	public ResponseEntity<Costumer> find(@PathVariable Integer id) {
+		Costumer obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
