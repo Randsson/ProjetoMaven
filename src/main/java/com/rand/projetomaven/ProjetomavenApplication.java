@@ -64,6 +64,12 @@ public class ProjetomavenApplication implements CommandLineRunner {
 		
 		Category cat1 = new Category(null, "informática");
 		Category cat2 = new Category(null, "Escritório");
+		Category cat3 = new Category(null, "Cama mesa e banho ");
+		Category cat4 = new Category(null, "Lazer");
+		Category cat5 = new Category(null, "Jogos");
+		Category cat6 = new Category(null, "Bazar");
+		Category cat7 = new Category(null, "Higiene");
+		Category cat8 = new Category(null, "Beleza");
 		
 		Product p1 = new Product(null, "Computador", 2000.00);
 		Product p2 = new Product(null, "Impressora", 800.00);
@@ -76,7 +82,7 @@ public class ProjetomavenApplication implements CommandLineRunner {
 		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategories().addAll(Arrays.asList(cat1));
 		
-		catRepository.saveAll(Arrays.asList(cat1, cat2));
+		catRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7, cat8));
 		prodRepository.saveAll(Arrays.asList(p1, p2, p3));
 		
 		State est1 = new State(null, "Alagoas");
