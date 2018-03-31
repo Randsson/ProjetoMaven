@@ -1,5 +1,6 @@
 package com.rand.projetomaven.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,5 +44,8 @@ public class CategoryService {
 		}
 	}
 
+	public List<Category> findAll() {
+		return repo.findAll();
+	}
 }
 	
