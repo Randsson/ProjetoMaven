@@ -51,7 +51,7 @@ public class Costumer implements Serializable{
 		this.name = name;
 		this.email = email;
 		this.cpfOuCnpj = cpfOuCnpj;
-		this.kind = kind.getCod();
+		this.kind =  (kind == null) ? null : kind.getCod();
 	}
 
 	public Integer getId() {
