@@ -33,9 +33,11 @@ public class CategoryService {
 		return repo.save(obj);
 	}
 	
+	
 	public Category update (Category obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Category newObj = find(obj.getId());
+		updatedData(newObj, obj); //método privado para atualizar somente os dados necessários;
+		return repo.save(newObj);
 	}
 
 	public void delete(Integer id) {
@@ -44,7 +46,7 @@ public class CategoryService {
 		repo.deleteById(id);
 		}
 		catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
+			throw new DataIntegrityException("Não é possível excluir porque há entidades relacionadas");
 		}
 	}
 
@@ -59,6 +61,12 @@ public class CategoryService {
 	
 	public Category fromDTO (CategoryDTO objDTO) {
 		return new Category(objDTO.getId(), objDTO.getName());
+	}
+	
+	
+	
+	private void updatedData (Category newObj, Category obj) {
+		newObj.setName(obj.getName());
 	}
 }
 	
