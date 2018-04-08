@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class Costumer implements Serializable{
 	private String cpfOuCnpj;
 	private Integer kind;
 	
-	@OneToMany(mappedBy="costumer")
+	@OneToMany(mappedBy="costumer",  cascade=CascadeType.ALL)
 	private List<Address> addresses = new ArrayList<>();
 	
 	@ElementCollection

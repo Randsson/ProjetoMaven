@@ -1,5 +1,6 @@
 package com.rand.projetomaven.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rand.projetomaven.domain.Costumer;
 import com.rand.projetomaven.dto.CostumerDTO;
+import com.rand.projetomaven.dto.CostumerNewDTO;
 import com.rand.projetomaven.services.CostumerService;
 
 @RestController
@@ -26,13 +29,20 @@ public class CostumerResource {
 	@Autowired
 	private CostumerService service;
 	
-	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Costumer> find(@PathVariable Integer id) {
 		Costumer obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody CostumerNewDTO objDTO) {
+		Costumer obj = service.fromDTO(objDTO);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
+	}
 		
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CostumerDTO objDTO, @PathVariable Integer id){
