@@ -32,9 +32,6 @@ public class CostumerService {
 	@Autowired
 	private AddressRepository addressRepository;
 	
-	@Autowired
-	private CityRepository cityRepository;
-	
 	@Transactional
 	public Costumer insert(Costumer obj) {
 		obj.setId(null);
@@ -82,7 +79,6 @@ public class CostumerService {
 	public Costumer fromDTO (CostumerNewDTO objDTO) {
 		Costumer costumer = new Costumer( null, objDTO.getName(), objDTO.getEmail(), objDTO.getCpfOuCnpj(), CostumerKind.toEnum(objDTO.getKind()));
 		City city = new City(objDTO.getCityId(), null, null);
-		cityRepository.save(city);
 		Address address = new Address(null, objDTO.getNumber(), objDTO.getComplement(), objDTO.getDistrict(), objDTO.getPublicPlace(), objDTO.getZipCode(), costumer, city);
 		costumer.getAddresses().add(address);
 		costumer.getPhones().add(objDTO.getPhone1());

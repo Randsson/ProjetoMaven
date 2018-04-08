@@ -2,21 +2,45 @@ package com.rand.projetomaven.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.rand.projetomaven.services.validation.CostumerInsert;
+
+
+@CostumerInsert
 public class CostumerNewDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	@NotEmpty(message="Preenchimento obrigatório")
+	@Length(min=5, max= 120, message ="Entre 5 e 120 caracteres")
 	private String name;
+	@NotEmpty(message="Preenchimento Obrigatório")
+	@Email(message="Email inválido")
 	private String email;
+	
+	
 	private String cpfOuCnpj;
 	private Integer kind;
 	
+	@NotEmpty(message="Preenchimento Obrigatório")
 	private String number;
-	private String complement;
-	private String district;
-	private String publicPlace;
-	private String zipCode;
 	
+	private String complement;
+	
+	@NotEmpty(message="Preenchimento Obrigatório")
+	private String district;
+	
+	private String publicPlace;
+	
+	@NotEmpty(message="Preenchimento Obrigatório")
+	private String zipCode;
+
+	@NotEmpty(message="Preenchimento Obrigatório")
 	private String phone1;
+	
 	private String phone2;
 	private String phone3;
 	
