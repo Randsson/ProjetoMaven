@@ -8,7 +8,10 @@ import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
 import com.rand.projetomaven.domain.Costumer;
+import com.rand.projetomaven.services.validation.CostumerUpdate;
 
+
+@CostumerUpdate
 public class CostumerDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
